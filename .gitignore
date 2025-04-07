@@ -1,0 +1,13 @@
+csv
+*.csv
+*.aux
+*.txt
+*.log
+*.fdb_latex
+*.fls
+*.zip
+.auctex-auto
+*.dvi
+*.out
+*.fdb_latexmk 
+*.pyg
