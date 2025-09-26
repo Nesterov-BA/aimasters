@@ -11,3 +11,5 @@ csv
 *.out
 *.fdb_latexmk 
 *.pyg
+.venv
+uv.lock

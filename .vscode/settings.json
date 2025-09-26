@@ -1,0 +1,7 @@
+{
+  "python.defaultInterpreterPath": "/home/boris/projects/python/aimasters/.venv/bin/python",
+  "jupyter.kernels.defaultKernelPython": "/home/boris/projects/python/aimasters/.venv/bin/python",
+  "jupyter.jupyterServerType": "local",
+  "python.terminal.activateEnvironment": false,
+  "python.venvPath": "/home/boris/projects/python/aimasters/.venv"
+}
