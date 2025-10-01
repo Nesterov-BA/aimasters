@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% \usepackage[left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
+\usepackage{hyperref}
+\usepackage{seqsplit}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage{mathalfa}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{caption,subcaption}
+\usepackage{wrapfig}
+\usepackage[stable]{footmisc}
+\usepackage{indentfirst}
+\usepackage{rotating}
+\usepackage{pdflscape}
+
+\usepackage{minted}
+
+\usepackage{MnSymbol,wasysym}
+
+\begin{document}
+
+\begin{center}
+  \Large {Задание 1. Асимптотические сложности.}
+\end{center}
+
+\bigskip
+
+\textbf{1.1.а)} Да, например при \( f(n) = n^2 \), \( g(n)
+\frac{n}{\log{n}} \) \( h(n) \) будет равно \( n\log n \).
+
+\textbf{1.1.б)} Из условия получаем следующие неравенства:
+\[
+f(n) \le c_1 n^2,
+\]
+\[
+\frac 1 {g(n)} \le c_2.
+\]
+для каких-то положительных констант \( c_1, c_2 \). Отсюда
+\begin{equation}
+h(n) \le c_1 c_2 n^2, \label{eq:11b}
+\end{equation}  а для условия \( h(n) = \Theta (n^3) \) должно
+выполняться неравенство \( h(n) \ge c_3 n^3 \), которое не может
+выполняться одновременно с неравенством (\ref{eq:11b}) при всех \( n
+\) ни для каких \( c_1,c_2,c_3 > 0 \).
+\medskip
+
+\textbf{3.} Докажем оценку сверху:
+\[
+\sum\limits_{i=1}^n i^\alpha \le  \sum\limits_{i=1}^n n^\alpha =
+n\cdot n^\alpha = n^{1+\alpha}.
+\]
+. Оценка снизу:
+\[
+\sum\limits_{i=1}^n i^\alpha \ge \sum\limits_{i=\frac n 2}^n i^\alpha
+\ge \sum\limits_{i=\frac n 2}^n {\frac n 2}^\alpha = \left(\frac n
+2\right)^{1+\alpha } =\left(\frac{1}{2}\right)^{1+\alpha }n^{1+\alpha }.
+\]
+
+\medskip
+
+\textbf{2.} Воспользуемся результатами предыдущей задачи. Для этого заметим,
+что \( i^3 \le i^3 + 2i + 5 \) при всех \( i \) и \( i^3 + 2i + 5 \le 2i^3 \)
+начиная с некоторого \( i \). Отсюда
+\[
+\sum\limits_{i=1}^n i^{\frac 3 2} \le \sum\limits_{i=1}^n
+\sqrt{i^3+2i+5} \le \sqrt 2 \sum\limits_{i=1}^n i^{\frac 3 2}.
+\]
+По задаче 3 каждая из сумм стоящих слева и справа равна \( \Theta
+(n^{\frac 5 2}). \) Значит и \( \sum\limits_{i=1}^n \sqrt{i^3+2i+5} =
+\Theta (n^{\frac 5 2}) \).
+
+\textbf{Ответ:} \( \Theta (n^\frac 5 2). \)
+\medskip
+
+\textbf{4.} Положим \( f(x) = \frac 1 k \) при \( x \in [k,k+1) \) на
+\( [1,\infty) \). Тогда \( g(n) = \int\limits_1^{n+1} f(x)dx = 1 +
+\int\limits_2^{n+1} f(x)dx. \) При этом, на \( x\in[2,n+1] \)
+\[
+\frac 1 {x} \le f(x) \le \frac 1 {x-1}.
+\]
+Получаем \( 1 + \int\limits_2^{n+1} \frac 1 {x}  \le g(n) \le  1 +
+\int\limits_2^{n+1} \frac 1 {x-1}\). Обе функции слева и справа
+являются \( \Theta (\log n) \), значит \( g(n) = \Theta (\log n) \).
+
+\textbf{Ответ:} \( \Theta (\log n). \)
+\medskip
+
+\end{document}
