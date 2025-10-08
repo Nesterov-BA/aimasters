@@ -1,0 +1,126 @@
+\documentclass{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% \usepackage[left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
+\usepackage{hyperref}
+\usepackage{seqsplit}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage{mathalfa}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{caption,subcaption}
+\usepackage{wrapfig}
+\usepackage[stable]{footmisc}
+\usepackage{indentfirst}
+\usepackage{rotating}
+\usepackage{pdflscape}
+
+\usepackage{minted}
+
+\usepackage{MnSymbol,wasysym}
+
+\begin{document}
+
+\begin{center}
+  \Large {Задание 2. Нижние оценки и числа Фибоначчи.}
+\end{center}
+
+\bigskip
+
+\textbf{1.}
+Воспользуемся биномом Ньютона: \( (a+b)^n =
+\sum\limits_{k=0}^n{n\choose k} a^k b^{n-k} \). Видно, что если
+подставить \( a = b = 1 \), получим \( f(n) \). Отсюда \( f(n) = 2^n
+= \Theta (2^n) \).
+
+\textbf{Ответ: }\( \Theta (2^n) \).
+\medskip
+
+\textbf{2.} \textbf{Алгоритм:} На каждом шаге делим кучу пополам,
+если монет нечетное
+количество, оставляем одну. Взвешиваем кучи, повторяем шаг для более
+легкой. Если кучи равны по весу, значит монет было нечетное количество, и та,
+которую оставили лежать --- фальшивая. Псевдокод:
+\begin{algorithmic}[1]
+  \Function{FindFalseCoin}{coins}
+  \If{\(\#coins == 1\)}
+  \State \Return coins
+  \ElsIf{\(\#coins == 2n\)}
+  \State \( \# coinsLeft = n, \#coinsRight = n \)
+  \If{\( \text{mass}(coinsLeft) < \text{mass}(coinsRight) \)}
+  \State \Call{FindFalseCoin}{coinsLeft}
+  \Else
+  \State \Call{FindFalseCoin}{coinsRight}
+  \EndIf
+  \ElsIf{\(\#coins == 2n+1\)}
+  \State \( \# coinsLeft = n, \#coinsRight = n, singleCoin \)
+  \If{\( \text{mass}(coinsLeft) < \text{mass}(coinsRight) \)}
+  \State \Call{FindFalseCoin}{coinsLeft}
+  \ElsIf{\( \text{mass}(coinsLeft) > \text{mass}(coinsRight) \)}
+  \State \Call{FindFalseCoin}{coinsRight}
+  \Else
+  \State \Return singleCoin
+  \EndIf
+  \EndIf  \EndFunction
+\end{algorithmic}
+\textbf{Корректность: }На каждом шаге алгоритм применяется к той
+куче, в которой лежит фальшивая монета. После каждого шага размер
+кучи строго уменьшается: \( 2n \rightarrow n, 2n+1 \rightarrow n \),
+если не происходит преждевременной остановки в случае нечетного числа
+монет. Значит, за конечное число шагов алгоритм будет применен к
+куче, состоящей из одной монеты и завершится, выдав фальшивую.
+\\
+\textbf{Асимптотика: } За один шаг размер кучи сокращается вдвое.
+Пусть \( 2^{k-1} <\#\text{Монет} = n \le 2^k \). Отсюда \( k-1<\log n \le k \).
+Обозначим \( T(n) \) --- количество шагов алгоритма для \( n \)
+монет. Тогда \( k-1=T(2^{k-1})\le T(n) \le T(2^k) = k \). Т. е. \(
+T(n) = \Theta(\log n) \).
+
+\medskip
+\textbf{3. }
+Докажем, что задача нахождения фальшивой монеты имеет асимптотику \(
+\log n \).
+\\
+Предположим, что дано \( 3^k \) монет, и мы пронумеруем их от
+\( 0 \) до \( 22\ldots2 \) в троичной системе. Тогда для нахождения
+фальшивой монеты необходимо узнать ее номер. Чтобы узнать одну цифру
+номера, необходимо определить \( \frac 2 3 \) монет, как настоящие.
+Для этого надо разделить монеты на 3 кучи и взвесить две. Заметим,
+что больше одной цифры узнать за взвешивание нельзя, так как если в
+каждой куче, которые взвешиваем будет более трети монет, то можем
+опознать одну из них и оставшуюся, т. е. менее \( \frac 2 3 \), а
+если взвешивать кучки менее трети монет, то в случае их равенства,
+как настоящие мы определим менее \( \frac 2 3 \).
+\\
+Итак, каждое взвешивание дает не более одной цифры, всего цифр \( k
+\), т. е. нужно \( k \)\ взвешиваний. Остается заметить, что если
+количество монет находится между \( 3^{k-1} \) и \( 3^{k} \), то цифр
+для записи нужно \( k = \lceil \log_3 n\rceil \).
+
+\textbf{4.} \( 13 = 1101_2. \)
+\begin{enumerate}
+  \item\( b=1 \): \( \left(7^2\right)\cdot 7 \equiv 343 \equiv 343 - 334 \equiv
+    9 \mod 167, \)
+  \item\( b = 0\): \( \left(7^3\right)^2 \equiv 9^2 \equiv 81 \mod 167, \)
+  \item\( b = 1\): \( \left(7^6\right)^2 \cdot 7 \equiv 81^2 \cdot 7
+    \equiv 48\cdot 7 \equiv 2 \mod 167 \).
+\end{enumerate}
+
+\textbf{Ответ: }2.
+\medskip
+\end{document}
