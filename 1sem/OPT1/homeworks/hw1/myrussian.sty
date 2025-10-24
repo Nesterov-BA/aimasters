@@ -1,0 +1,121 @@
+\ProvidesPackage{myrussian}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm,indentfirst,enumerate,textcomp}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{indentfirst, array, csquotes}
+\usepackage{amscd,latexsym}
+\usepackage{mathrsfs}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage{graphicx}
+\usepackage{textcase}% Оформление страниц
+\usepackage[style = ieee]{biblatex}
+
+\theoremstyle{plain}
+\newtheorem*{maintheorem}{Main Theorem}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{prop}[theorem]{Предложение}
+\newtheorem{corollary}[theorem]{Следствие}
+\newtheorem{ass}[theorem]{Утверждение}
+\newtheorem{lemma}[theorem]{Лемма}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Определение}
+\newtheorem{remark}[theorem]{Замечание}
+\newtheorem{constr}[theorem]{Конструкция}
+\newtheorem{problem}[theorem]{Задача}
+\newtheorem{example}[theorem]{Пример}
+\newtheorem{sol}[theorem]{Решение}
+
+\def\labelenumi{\rm(\theenumi)}
+
+\def\labelenumi{\rm(\theenumi)}
+%%%%Page parameters
+%Добровольский=========================================
+\renewcommand{\le}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+
+\textwidth=468pt \textheight=676,4pt
+
+\oddsidemargin -2mm
+\evensidemargin=-2mm
+%\oddsidemargin=-5mm \evensidemargin=-5mm
+
+\topmargin=-10mm
+\makeindex
+
+\tolerance=2000
+\def\@seccntformat#1{\csname the#1\endcsname.\ } % точка после номера раздела
+
+\newcommand{\prvkolonttl}[1]{%
+  \renewcommand{\@oddhead}%
+  {\raisebox{0pt}[\headheight][0pt]{%
+      {\vbox{\hbox to \textwidth{%
+            {\hfil \strut #1  \hfil}%
+      {\thepage}} \hrule}}%
+}}}
+
+\newcommand{\levkolonttl}[1]{%
+  \renewcommand{\@evenhead}%
+  {\raisebox{0pt}[\headheight][0pt]{%
+      {\vbox{\hbox to \textwidth{\thepage \hfil \strut #1  \hfil}%
+      \hrule}}%
+}}}
+\def\C{{\mathbb C}}
+\def\N{{\mathbb N}}
+\def\Q{{\mathbb Q}}
+\def\R{\mathbb R}
+\def\X{{\mathbb X}}
+\def\Y{{\mathbb Y}}
+\def\Z{{\mathbb Z}}
+
+\def\arcsh{\operatorname{arcsh}}
+\def\capa{\operatorname{cap}}
+\def\CC{\operatorname{CC}}
+\def\cut{\operatorname{CUT}}
+\def\Cl{\operatorname{Cl}}
+\def\const{\operatorname{const}}
+\def\conv{\operatorname{conv}}
+\def\cov{\operatorname{cov}}
+\def\crit{{\operatorname{crit}}}
+\def\diam{\operatorname{diam}}
+\def\dil{\operatorname{dil}}
+\def\dis{\operatorname{dis}}
+\def\dist{\operatorname{dist}}
+\def\div{\operatorname{div}}
+\def\dom{\operatorname{dom}}
+\def\ext{\operatorname{ext}}
+\def\GL{\operatorname{GL}}
+\def\gr{\operatorname{gr}}
+\def\Gr{\operatorname{Gr}}
+\def\id{\operatorname{id}}
+\def\im{\operatorname{im}}
+\def\Im{\operatorname{Im}}
+\def\Iso{\operatorname{Iso}}
+\def\Int{\operatorname{Int}}
+\def\loc{{\operatorname{loc}}}
+\def\ln{\operatorname{ln}}
+\def\mst{\operatorname{mst}}
+\def\MST{\operatorname{MST}}
+\def\NP{\operatorname{NP}}
+\def\O{\operatorname{O}}
+\def\FillRad{\operatorname{FillRad}}
+\def\opt{{\operatorname{opt}}}
+\def\Re{\operatorname{Re}}
+\def\RP{\operatorname{\R P}}
+\def\sign{\operatorname{sign}}
+\def\SL{\operatorname{SL}}
+\def\smt{\operatorname{smt}}
+\def\SMT{\operatorname{SMT}}
+\def\SO{\operatorname{SO}}
+\def\St{\operatorname{St}}
+\def\SU{\operatorname{SU}}
+\def\supp{\operatorname{supp}}
+\def\tanh{\operatorname{th}}
+\def\U{\operatorname{U}}
+\def\vol{\operatorname{vol}}
+\def\XST{\operatorname{XST}}
+\def\xst{\operatorname{xst}}

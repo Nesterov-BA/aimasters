@@ -1,0 +1,123 @@
+\documentclass{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% \usepackage[left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
+\usepackage{hyperref}
+\usepackage{seqsplit}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage{mathalfa}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{caption,subcaption}
+\usepackage{wrapfig}
+\usepackage[stable]{footmisc}
+\usepackage{indentfirst}
+\usepackage{rotating}
+\usepackage{pdflscape}
+
+% \usepackage{minted}
+
+\usepackage{MnSymbol,wasysym}
+
+\begin{document}
+
+\begin{center}
+  \Large {Задание 4. Рекурренты.}
+\end{center}
+
+\textbf{1} Обозначим $v_n$ --- двумерный вектор-столбец равный
+$
+\begin{pmatrix}
+  F_{n}\\
+  F_{n-1}
+\end{pmatrix}.
+$
+Из соотношения  $F_{k+2} = F_{k+1} + F_k$ необходимо получить матрицу
+перехода от $v_n$ к $v_{n+1}$, т. е.
+\[
+v_{n+1} = Av_n\]
+\[
+  \begin{pmatrix}
+    F_{n} + F_{n-1}\\
+    F_{n}
+  \end{pmatrix} = A
+  \begin{pmatrix}
+    F_{n}\\
+    F_{n-1}
+  \end{pmatrix}
+\]
+Получаем, что $A =
+\begin{pmatrix}
+  1 &1\\
+  1 &0
+\end{pmatrix} =
+\begin{pmatrix}
+  F_2 &F_1\\
+  F_1 &F_0
+\end{pmatrix} $. Столбцы матрицы $A$ равны $v_2, v_1$, из чего получаем формулу:
+\[A^n =
+  \begin{pmatrix}
+    F_{n+1} &F_n\\
+    F_{n} &F_{n-1}
+\end{pmatrix} .\]
+Так, соотношения верны и для отрицаетльных $n$, для нахождения
+$F_{-n}$ достаточно посчитать \[A^{-n} = (A^{-1})^n =
+  \begin{pmatrix}
+    0 & 1\\
+    1 & -1
+\end{pmatrix}^n.\] Искомое число будет лежать в левом нижнем (или
+правом верхнем) углу матрицы.
+\medskip
+
+\textbf{2} Найдите асимптотическую оценку функции $T(n)$. Примените
+мастер-теорему в тех случаях, когда ее можно использовать, \textbf{и
+посчитайте асимптотику иначе, когда нельзя}. Варианты есть следующие.
+Можно выписать рекурренту в виде суммы и найти, чему она равна. Можно
+подставить рекурренту саму в себя и посмотреть, что получается. Можно
+обратиться к литературе (учебник Кормена, учебник Дасгупты)
+
+\begin{enumerate}
+  \item $T(n) = 25 T(\frac{n}{5}) + n^2$
+  \item $T(n) = 16 T(\frac{n}{2}) + n^3$
+  \item $T(n) = 9 T(\frac{n}{3}) + n^3$
+  \item $T(n) = T(n-1) + 3n$
+  \item $T(n) = T(\frac{n}{4}) + T(\frac{3n}{4}) + n$
+  \item $T(n) = T(\frac{n}{2}) + T(\frac{2n}{3}) + n^2$
+  \item $T(n) = T(n - 1) + n^2$
+  \item $T(n) = 4 T(\frac{n}{16}) + \sqrt{n}$
+  \item $T(n) = 9 T(\frac{n}{3}) + n^3$
+  \item $T(n) = 9 T(\frac{n}{3}) + n$
+\end{enumerate}
+\textbf{Решение}
+\begin{enumerate}
+  \item \( \log_b a = 2 \), \( c=2, k = 0
+    \) \( \Rightarrow \) \( T(n) = \Theta (n^2 \log n) \)
+  \item $\log_{b}a = 4, c = 3 \Rightarrow T(n) = \Theta(n^{4})$
+  \item $\log_{b}a = 2, c = 3 \Rightarrow T(n) = \Theta(n^{3})$ \label{item 3}
+  \item \( T(n) \) - сумма линейных слагаемых, значит \( T(n) = \Theta (n^2) \)
+  \item ---
+  \item ---
+  \item \( T(n) \) --- сумма квадратичных слагаемых, значит \( T(n) =
+    \Theta (n^3) \)
+  \item \( \log_b a =\frac{1}{2} \), \( c=\frac 1 2, k = 0
+    \) \( \Rightarrow \) \( T(n) = \Theta (\sqrt n \log n) \)
+  \item Это пункт \ref{item 3}
+  \item $\log_{b}a = 2, c = 1 \Rightarrow T(n) = \Theta(n^{2})$
+\end{enumerate}
+
+\end{document}
