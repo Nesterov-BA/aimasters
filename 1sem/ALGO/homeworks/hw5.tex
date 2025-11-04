@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% \usepackage[left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
+\usepackage{hyperref}
+\usepackage{seqsplit}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage{mathalfa}
+\usepackage{mathrsfs}
+\usepackage{caption,subcaption}
+\usepackage{dsfont}
+\usepackage{wrapfig}
+\usepackage[stable]{footmisc}
+\usepackage{indentfirst}
+\usepackage{rotating}
+\usepackage{pdflscape}
+
+\usepackage{minted}
+
+\usepackage{MnSymbol,wasysym}
+
+\def\ig#1#2#3#4{
+  \begin{figure}[!ht]
+    \begin{center}%
+      \includegraphics[height=#2\textheight]{#1.eps}\caption{#4}\label{#3}%
+    \end{center}
+\end{figure}}
+
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\begin{document}
+
+\begin{center}
+  \Large {Задание 5. Битовые операции, модульная арифметика, немного реккурент.}
+\end{center}
+\bigskip
+
+\textbf{1}
+\medskip
+
+\textbf{2}
+\medskip
+
+\textbf{3} Хотим найти \( a \cdot b \), где \( a \ge b \).
+Надо вычислить \( c = a+b, d = a-b \). Это линейные операции сложения.
+Далее вычисляем \( c^2, d^2 \) --- линейные по условию. Затем
+вычисляем \( c^2 - d^2 \) при возведении в квадрат длина числа
+умножается не более чем на 2, т.е. сложение снова линейно по изначальной длине.
+Заметим, что \( c^2 - d^2 = (a+b)^2 - (a-b)^2 = 4ab \). Итак,
+остается сделать поделить на \( 4 \), т.е. сделать два битовых сдвига.
+\medskip
+
+\textbf{4} Положим \(d = \text{НОД}(a,b)\) Так как \( a \vdots d\) и
+\( b \vdots d \), \( a-b \vdots d \). Отсюда \( \text{НОД}(a-b,b)\ge
+d \). Пусть теперь \( a-b, b \vdots d_1 > d \). Тогда и \( a\vdots d_1 \)
+--- противоречие с тем, что \( d_1 \) --- НОД.
+\medskip
+
+\textbf{5} По предыдущей задаче, если вычесть из большего числа
+меньшее, их НОД не изменится. То есть, после каждого вычитания НОД
+всех чисел на доске не изменится.  Пусть
+изначально на доске \( N \) чисел и их НОД равен \( d \).
+Значит минимальная сумма всех чисел равна \( N \cdot d \). При каждом
+вычитании по условию может получиться только положительное число,
+значит после каждого вычитания на доске все числа положительны.
+Значит каждое вычитание строго уменьшает сумму чисел на доске. Если
+на доске осталось \( N \) одинаковых чисел меньше или больше \( d \),
+то их НОД будет соответственно меньше или больше \( d \), что
+невозможно. Итак сумма чисел убывает, значит процесс завершится, и
+могут остаться только числа равные НОД изначально написанных.
+\medskip
+
+\textbf{6} Случаи \( \alpha = t \) и \( \alpha = 1-t \) идентичны,
+поэтому будем рассматривать только \( \alpha \in
+\left(0,\frac{1}{2}\right] \). Тогда \( \alpha \le 1- \alpha  \).
+На каждом уровне рекурсии количество элементов суммируется к \( n \).
+Поэтому на каждом уровне \( \Theta (n) \) операций. Оценим высоту
+дерева рекурсии. Так как \( \alpha \le 1- \alpha \), \( \log_ \alpha
+n \ge \log _{1 - \alpha }n \). В итоге получаем
+\[
+  \Theta (n)\log_{1-\alpha} n \le T(n) \le \Theta (n) \log_\alpha n
+\]
+\textbf{Ответ:} \( T(n) = \Theta (n\log n). \)
+\medskip
+
+\textbf{7} Условие записывается как \( T(n) = n \cdot T(\frac n 2) +
+\Theta (n) \).
+Высота дерева рекурсии равна \( \log_2 n \). На первом уровне \(
+\Theta (n) \), на втором \( n \) задач по \( \Theta (\frac n 2) \),
+на третьем \( n \cdot \frac n 2 \) на \( \Theta (\frac{n}{4}) \) и
+т.д. На \( i \)-м уровне \( n \cdot \frac{n}{2} \cdot \dots \cdot
+\frac{n}{2^{i-1}} = \frac{n^{i}}{2^{\frac{i(i-1)}2}}\). Итак,
+асимптотика равна функции (положим \( n = 2^k \)):
+\[
+  \sum\limits_{i=1}^{\log_2 n} \frac{n^{i}}{2^{\frac{i(i-1)}2}} =
+  \sum\limits_{i=1}^{k} 2^{ik + \frac i 2 - \frac{i^2} 2} = \sum
+  2^{-(ai + bk)^2 + (ck +d)^2}
+\]
+\end{document}

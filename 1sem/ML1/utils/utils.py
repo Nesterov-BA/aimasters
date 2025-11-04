@@ -493,3 +493,53 @@ def get_df_info(df, cols=None):
             .format(precision=2)
             .set_properties(subset=['trash_score'], **{'font-weight': 'bold'})
     )
+def get_df_info_mine(df, *args, **kwargs):
+    '''
+    docstring example:
+
+    Выводит инфу о колонках датафрейма в виде датафрейма
+
+    df: исходный датафрейм
+    ...
+
+    returns: pd.DataFrame с инфой
+
+    '''
+    result  = pd.DataFrame()
+    #index
+    result.index = df.columns
+    #types
+    result['dtype'] = df.dtypes
+    #number of unique
+    result['nunique'] = df.nunique()
+    #exaples without nans
+    dfNoNan = df.dropna()
+    sample = dfNoNan.sample(2)
+    example1, example2 = sample.iloc[0], sample.iloc[1]
+    result['ex1'] = example1
+    result['ex2'] = example2
+    #nan amount
+    nanAmount = df.isna().mean()
+    nanAmount = nanAmount.replace(0.0,-1)
+    nanAmount = np.trunc(1000*nanAmount)/1000
+    result['nans'] = nanAmount
+    #zeros amount
+    zeroAmount = (df==0).mean()
+    zeroAmount = zeroAmount.replace(0.0,-1)
+    zeroAmount = np.trunc(1000*zeroAmount)/1000
+    result['zeros'] = zeroAmount
+    #empty strings
+    emptyStrAmount = (df=="").mean()
+    emptyStrAmount = emptyStrAmount.replace(0.0,-1)
+    emptyStrAmount = np.trunc(1000*emptyStrAmount)/1000
+    result['empty_str'] = emptyStrAmount
+    #most common element
+    result['col_mode'] = df.mode().iloc[0]
+    #percentage of the most common element
+    vcMax = (df==result['col_mode']).mean()
+    result['vc_max'] = vcMax
+    #trash score
+    trashScore = result[['nans', 'zeros', 'empty_str']].max(axis=1)
+    result['trash_score'] = trashScore
+    # result['example1'] = 
+    return result
