@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath,amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% \usepackage[left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
+\usepackage{hyperref}
+\usepackage{seqsplit}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage{microtype}
+\usepackage{mathalfa}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{caption,subcaption}
+\usepackage{wrapfig}
+\usepackage[stable]{footmisc}
+\usepackage{indentfirst}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{centernot}
+
+% \usepackage{minted}
+
+\usepackage{MnSymbol,wasysym}
+
+\def\labelenumi{\rm(\theenumi)}
+\def\divby{\,\vdots\,}
+\def\ndivby{\,\not\vdots\,}
+
+\begin{document}
+
+\begin{center}
+  \Large {Задание 6. Модульная арифметика и алгоритм Евклида.}
+\end{center}
+\textbf{1}
+\begin{enumerate}
+  \item Ищем решение уравнения \( ax + by = d \), получаем \( a_1,b_1
+    \). Искомым решением будет пара \( ka_1, kb_1 \). \label{task1:1}
+  \item Пусть дано уравнение в целых числах на \( a,b \):
+    \[
+      ax + by = h.
+    \]
+    Это уравнение разрешимо тогда и только тогда, когда \( h\divby \gcd(x,y) \).
+    \begin{proof}
+      Обозначим \( d = \gcd(x,y)\). Тогда для любых целых \( a,b \)
+      выполняется \( ax \divby d, by \divby d \Rightarrow ax + by
+      \divby d \). То есть не существует целых \( a,b \), таких, что
+      \( ax+by \ndivby d\). Отсюда следует необходимость условия \( h
+      \divby \gcd(x,y) \). Достаточность --- пункт \ref{task1:1}.
+    \end{proof}
+  \item Пусть \( (a_1,b_1), (a_2, b_2) \) --- частные решения. Тогда
+    \( a_1 x + b_1 y = a_2 x + b_2 y = d \). Отсюда
+    \[
+      (a_1 - a_2)x +
+      (b_1 - b_2)y = 0.
+    \]
+    Пусть теперь \( a_0 x + b_0 y = 0 \). Тогда \( (a_1 + a_0)x +
+    (b_1 + b_0) y = d \). Итак, все решения уравнения отличаются от
+    произвольного частного на решение однородного. Общее решение
+    уравнения \( ax + by = 0 \) несложно найти. Обозначим \( e =
+    \text{НОК} (x,y) \) и перепишем уравнение в виде \( ax = -by \).
+    Видно, что и левая и правая части должны делиться на \( x \) и \(
+    y \), т.е. должны быть кратны \( e \). Поэтому общее решение
+    имеет вид \( \left(\frac e x t, - \frac e y t\right), t \in \mathbb{Z}\).
+
+    Итак, \( a_1, b_1 \) --- частное решение, \( a_0 = \frac e x, b_0
+    = -\frac e y\). Тогда общее решение исходного уравнения имеет вид
+    \( (a_1 + ta_0, b_1 + t b_0), t \in \mathbb Z.\)
+
+\end{enumerate}
+
+\textbf{2} Решите уравнения в целых числах. Нужно найти все решения,
+а не только частное.
+
+\begin{enumerate}
+  \item $238x + 385y = 133$,
+  \item $143x + 121y = 52$.
+\end{enumerate}
+\begin{enumerate}
+  \item Найдем частное решение расширенным алгоритмом Евклида:
+    \begin{gather*}
+      s_{0} = 1, t_{0} = 0\\
+      s_{1} = 0, t_{1} = 1\\
+      385 = 238 + 147, s_{2} = 1, t_{2} = -1\\
+      238 = 147 + 91, s_{3} = 0 - 1 = -1, t_{3} = 2\\
+      147 = 91 + 56, s_{4} = 1 + 1 = 2, t_{4} = -3\\
+      91 = 56 + 35, s_{5} = -1-2 = -3, t_{5} = 5\\
+      56 = 35 + 21, s_{6} = 5, t_{6} = -8\\
+      35 = 21 + 14, s_{7} = -8, t_{7} = 13\\
+      21 = 14 + 7, s_{8} = 13, t_{8} = -21\\
+      14 = 2*7
+    \end{gather*}
+    Получаем, что $283*(-21) + 385*13 = 7$, откуда $283*(-399) +
+    385*(247) = 133$.
+    Общее решение однородного уравнения:$x = 55t, y = -34t, t \in \mathbb{Z}$.
+
+    Общее решение имеет вид: \[x = 55t - 283, y = -34t + 247.\]
+  \item Найдем частное решение расширенным алгоритмом Евклида:
+    \begin{gather*}
+      s_{0} = 1, t_{0} = 0\\
+      s_{1} = 0, t_{1} = 1\\
+      143 = 121 + 22, s_{2} = 1, t_{2} = -1\\
+      121 = 22*5 + 11 , s_{3} = 0 - 5 = -5, t_{3} = 6\\
+      22 = 11*2
+    \end{gather*}
+    Получаем, что $143*(-5) + 121*5 = 11$, а $52$ не делится на $11$.
+    \textbf{Решений нет}.
+
+\end{enumerate}
+\medskip
+
+\textbf{3} Решите сравнение $68x + 85 \equiv 0 (\mod 561)$ с помощью
+расширенного алгоритма Евклида. Требуется найти все решения в вычетах.\\
+Решения уравнения экивалентно решению Диовантового уравнения $68x + 561y = -85$.
+\begin{gather*}
+  s_{0} = 1, t_{0} = 0\\
+  s_{1} = 0, t_{1} = 1\\
+  561 = 8*68 + 17, s_{2} = 1, t_{2} = -8\\
+  68 = 17*4
+\end{gather*}
+Получаем $68*(-8) + 561*1 = 17$, откуда $68*(40) + 561*(-5) = -85$.\\
+Общее решение однородного имеет вид $x = 33t, y = -4t, t\in \mathbb{Z}$.\\
+\textbf{Ответ:} $x \equiv 40 + 33t (\mod 561), t = 0, \ldots, 16$.
+\medskip
+
+\textbf{4} Найдите обратный остаток $7^{-1} (\mod 102)$.
+
+Обозначим искомый остаток за $x$. Тогда $x$ является решением
+уравнения $7x + 102y = 1$.
+\begin{gather*}
+  s_{0} = 1, t_{0} = 0\\
+  s_{1} = 0, t_{1} = 1\\
+  102 = 14*7 + 4, s_{2} = 1, t_{2} = -14\\
+  7 = 1*4 + 3, s_{3} = -1, t_{3} = 15\\
+  4 = 3+1, s_{4} = 2, t_{4} = -29
+\end{gather*}
+Получаем $102*2 + 7*(-29) = 1$.
+\textbf{Ответ:} $7^{-1}\equiv -29 \equiv 73(\mod 102)$.
+\medskip
+
+\end{document}
