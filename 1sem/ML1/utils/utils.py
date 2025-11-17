@@ -2,7 +2,26 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy import stats
 import gc
+
+
+def draw_qqplot(df, cols=None, distribution = "norm", hue=None, alpha=0.5, figsize=(10, 10)):
+    if cols == None:
+        cols = df.columns
+    for column in cols:
+        fig, ax = plt.subplots(1, 1, figsize=figsize)
+        #create a title for the plot
+        plt.suptitle(column)
+        #drop zero values
+        # df = df[df[column] != 0]
+        #drop nan values
+        df = df[df[column] != np.inf]
+        if len(df[column]) > 200:
+            df = df.sample(200)
+        stats.probplot(data = df, dist=distribution, sparams=(2.5,), plot=ax)
+        sns.histplot(data=df, x=column, hue=hue, ax=ax[0])
+
 
 
 def plot_density(df, hue = None, cols=None):
@@ -44,6 +63,34 @@ def plot_density(df, hue = None, cols=None):
             sns.countplot(data=df, x=column, hue=hue)
         
     pass
+def compare_transformation_dist(df, transform_func=None, cols=None):
+    '''
+    transform_func: callable or dict:
+    {
+    col_1: func_1,
+    col_2: func_2
+    }
+    '''
+    if cols is None:
+        cols = df.columns
+        
+    additional_plot = int(transform_func is not None)
+    for col in cols:
+        fig, ax = plt.subplots(1, 2 + 2 * additional_plot, figsize=(6 + 6 * additional_plot, 2))
+        ax[0].hist(df[col], bins=33)
+        ax[1].hist(df[col], bins=33)
+        if callable(transform_func):
+            ax[2].hist(transform_func(df[col].values), bins=33, color='red')
+            ax[3].hist(transform_func(df[col].values), bins=33, color='red')
+            ax[3].set_yscale('log')
+        elif isinstance(transform_func, dict) and col in transform_func:
+            ax[2].hist(transform_func[col](df[col].values), bins=33, color='red')
+            ax[3].hist(transform_func[col](df[col].values), bins=33, color='red')
+            ax[3].set_yscale('log')
+        ax[0].set_title(col)
+        ax[1].set_yscale('log')
+        fig.tight_layout()
+        plt.show()
 
 def correlation_matrix(df_analysis, targetCol=None, cols=None):
     '''
