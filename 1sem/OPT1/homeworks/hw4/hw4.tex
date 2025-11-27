@@ -3,216 +3,102 @@
 \begin{document}
 
 \begin{center}
-  \Large {Домашнее задание 4.}
+  \Large {Домашнее задание 1.}
 \end{center}
 \bigskip
-\section{Условия оптимальности}
-\textbf{1.} Формулировка задачи. Положим \( \widetilde W = W - \sum
-w_i \) и будем обозначать \( E_i(s_i) \) --- функции энергии из
-условия. Нетрудно заметить, что все эти функции выпуклые, т.к. их
-графиками являются левая и правая ветви парабол, склеенные в нуле.
-Получаем следующую задачу оптимизации:
-\begin{gather*}
-  \min \sum E_i(s_i)\\
-  \text{s.t.}\\
-  \sum s_i = \widetilde W\\
-\end{gather*}
-Условий типа неравенство нет, следовательно из условий ККТ остаются только два:
-\begin{gather*}
-  \sum s_i = \widetilde W\\
-  \grad \sum \big(E_i(s_i)\big) + \lambda \sum s_i - \lambda \widetilde W = 0
-\end{gather*}
-Условие на градиент распадается на \( n \) уравнений
-\begin{equation}
-  \frac{dE_i(s_i)}{ds_i} = -\lambda. \label{eq:1.1}
-\end{equation}
-При этом,
-\[
-  \frac{dE_i(s_i)}{ds_i} =
-  \begin{cases}
-    k_i^{\text{ext}}(s_i-N_i), &\text{ if } s_i \ge N_i,\\
-    k_i^{\text{comp}}(s_i-N_i), &\text{ if } s_i < N_i.
-  \end{cases}
-\]
-Разберем два случая:\\
-1) \( - \lambda \ge 0 \iff
-\lambda \le 0\). Тогда уравнение \ref{eq:1.1} принимает вид:
-\[
-k_i^{\text{ext}}(s_i-N_i) = -\lambda.
-\]
-Получаем \( s_i = -\frac{\lambda }{k_i^\text{ext}} + N_i\). Отсюда
-\[
-\widetilde W = \sum s_i = -\lambda \sum
-\frac{1}{k^\text{ext}_i} + \sum N_i.
-\]
+\section{Выпуклые множества}
+\textbf{1.}
+а) Выпуклость \( \Rightarrow \) Пересечение с любой прямой выпукло.
 \\
-2) \( - \lambda < 0 \iff
-\lambda > 0\). Тогда уравнение \ref{eq:1.1} принимает вид:
-\[
-k_i^{\text{comp}}(s_i-N_i) = -\lambda.
-\]
-Получаем \( s_i = -\frac{\lambda }{k_i^\text{comp}} + N_i\). Отсюда
-\[
-\widetilde W = \sum s_i = -\lambda \sum
-\frac{1}{k^\text{comp}_i} + \sum N_i.
-\]
-Если \( \widetilde W - \sum n_i \ge 0 \) то попадаем в случай 1. Тогда \[
-\lambda =
-\frac{\sum N_i - \widetilde W}{\sum \frac{1}{k^\text{ext}_i}}.
-\]
-Отсюда
-\[
-s_i = \frac{\widetilde W - \sum N_j}{k_i^{\text{ext}}\sum
-\frac{1}{k_j^{\text{ext}}}} + N_i.
-\]
-Иначе, попали в случай 2. Аналогично
-\[
-s_i = \frac{\widetilde W - \sum N_j}{k_i^{\text{comp}}\sum
-\frac{1}{k_j^{\text{comp}}}} + N_i.
-\]
-
+Очевидно, т.к. прямая  --- тоже выпуклое множество.
+\\
+б) Пересечение с любой прямой выпукло \( \Rightarrow \) Выпуклость.
+\\
+Пусть наше множество --- \( X \). Если оно состоит из одной точки,
+оно выпукло. Далее, в нем лежат две различные точки \( x_1,x_2 \).
+Проведем через эти точки прямую. По условию, пересечение прямой с \(
+X \) выпукло. Это означает, что в пересечении лежат все точки вида \(
+tx_1 + (1-t)x_2 \), \( t \in [0,1] \). Значит эти точки лежат и в \(
+X \). Получили, что вместе с каждой парой точек во множестве \( X \)
+лежит отрезок, их соединяющий. Это определение выпуклости.
 \medskip
 
-\textbf{3.} Запишем условия ККТ:
-\begin{enumerate}
-\item \( \displaystyle\sum_{i=1}^{n} x_i=1 \),
-\item \( -x_i\le 0 \),\label{cond:3.2}
-\item \( \mu_i \ge 0 \),\label{cond:3.3}
-\item \( \mu_i x_i = 0 \),\label{cond:3.4}
-\item \( \grad_x \| x-y \|^2 + \lambda \sum x_i - \sum \mu_i x_i = 0\).
-\end{enumerate}
-Последнее уравнение является системой из \( n \) уравнений:
-\[
-2x_i - 2y_i +\lambda -\mu_i =0
-\]
-Получаем, что
-\[
-x_i = y_i - \frac \lambda 2 + \frac{\mu_i}2.
-\]
-Рассмотрим два случая:
-\begin{enumerate}
-\item \( y_i - \frac \lambda 2 \ge 0 \). Тогда из условий
-\ref{cond:3.2}, \ref{cond:3.3}, \ref{cond:3.4}, \( x_i = y_i - \frac
-\lambda 2 \), \( \mu_i=0 \).
-\item \( y_i - \frac \lambda 2 < 0 \). Тогда из условий
-\ref{cond:3.2}, \ref{cond:3.3}, \ref{cond:3.4}, \( x_i = 0 \), \(
-\mu_i= \lambda -2y_i\).
-\end{enumerate}
-Итак, получили, что
-\begin{equation}
-x_i = \max\left\{0,y_i-\frac \lambda 2\right\}
-\label{eq:3.1}
-\end{equation}
-Положим \( \left(y_{(1)}, \ldots, y_{(n)}\right) \) --- отсортированный по
-возрастанию вектор \( y \). Положим
-\[
-S(\lambda) = \sum_i x_i = \sum_i
-\max\left\{0,y_i-\frac \lambda 2\right\}
-\]
-Пусть \(\frac{\lambda_0} 2 \in \left[y_{(k-1)}, y_{(k)}\right) \). Тогда
-\begin{equation}
-S(\lambda_0) =\sum_{i=k}^{n}\left(y_{(i)}-\frac{\lambda_0}2 \right) =
-\sum_{i=k} y_{(i)} - (n-k+1)\frac{\lambda _0}2
-\label{eq:3.2}
-\end{equation}
-Видно, что каждое слагаемое \( >0 \), с ростом \( \lambda \) каждое
-слагаемое становится меньше,
-и самих слагаемых становится меньше. Поэтому функция \( S(\lambda )
-\) строго убывает.
-\\
-\textbf{Алгоритм решения.}
-\begin{enumerate}
-\item Сортируем \( y \), получаем \( (y_{(1)},\ldots, y_{(n)}) \) ---
-\( O(n\log n) \).
-\item Считаем \( S(2y_{(i)}) \) до первого \( i \) такого, что \(
-S(2y_{(i-1)}) \le 1 <  S(2y_{(i)}) \) --- \( O(n) \).
-\item Вычисляем \( \lambda \) из уравнения \ref{eq:3.2} --- \( O(n) \).
-\item Вычисляем \( x_i \) из уравнений \ref{eq:3.1} --- \( O(n) \).
-\end{enumerate}
-Итого, \( O(n\log n) \).
-\section{Двойственные задачи}
-\textbf{2.} Перепишем задачу в эквивалентном виде:
-\begin{gather*}
-\min t,\\
-\text{s.t.}\\
-\max_{i} (a_i^T x + b_i)\le t.
-\end{gather*}
-Условие \( \max_{i} (a_i^T x + b_i)\le t \) эквивалентно системе
-неравенств \( a_i^T x + b_i \le t. \)\\
-Итак, получили задачу:
-\begin{gather*}
-\min t,\\
-\text{s.t.}\\
-a_i^T x + b_i\le t.
-\end{gather*}
-\textbf{Двойственная задача}
-\[
-L(x,t,\mu) = t + \sum_i \mu_i (a_i^T x + b_i-t)
-\]
-Рассмотрим \( \grad_x L(x,t,\mu) \). Он равен \( \sum_i \mu_i a_i^T
-\). Далее, \(  \frac{\delta L(x,t,\mu)}{\delta t} = 1 -\sum_i \mu_i \).
-Положим \( A \) --- матрица, столбцами которой являются вектор \( a_i
-\).Получаем условия на \( \text{dom} g \):
-\begin{gather*}
-A \mu = 0,\\
-\sum_i \mu_i = 1.
-\end{gather*}
-Действительно, если хотя бы одно из этих условий не выполняется,
-можно подобрать последовательность \( x_k,t_k \), на которой
-достигается \( \inf = -\infty \). При этих условиях
-\[
-L(x,t,\mu) = \sum_i \mu_i b_i = \inf_{x,t}L(x,t,\mu) = L(\mu).
-\]
-\textbf{Двойственная задача:}
-\begin{gather*}
-\max_\mu \sum_i \mu_i b_i,\\
-\text{s.t.}\\
-A \mu =0,\\
-\sum_i \mu_i = 1.
-\end{gather*}
-
+\textbf{2.а)} Перспективное отображение: \( P\colon
+\mathbb{R}^{n}\times \mathbb{R}^+
+\rightarrow \mathbb{R}^n \), \( P\big((x,t)\big) = \frac x t \).
+Гиперплоскость \( a^T x + ct = \gamma \) принимает вид \( a^T \frac x
+t = -c + \frac \gamma t \). Обозначим \( y = \frac x t \).
+Получаем семейство параллельных гиперплоскостей в \( \mathbb{R}^n\)
+вида \( a^T y = b \), где \( b \) лежит на отрезке \( [-c,-c + \gamma
+] \) (или наоборот, если \( \gamma < 0 \)). Это аналог двумерной
+полосы в \( \R^n \).
 \medskip
 
-\textbf{3.} Положим \( a_i = (a_i^1, \dots, a_i^n) \), \( A^i = a_i a^T_i \).
-Заметим, что \( a_{i}^T X a_i = \sum\limits_{j=1}^{n}a^j_i
-\sum\limits_{k=0}^n X_{jk}a_i^k = \sum\limits_{jk} A^i_{jk}X_{jk}.\)
-Применяя тождество:
-\( \left(AX\right)_{ij} =\sum\limits_k X_{kj}A_{ik}, \) получаем, что
-\(
-\sum\limits_j\sum\limits_{k} A^i_{jk}X_{jk} = \sum\limits_j
-\left(A^iX^T\right)_{jj} =  \tr(A^iX^T) = \tr(A^iX)\)
-\\
-Поэтому, неравенства из условия переписываются в виде
+\textbf{3.}
+\medskip
+
+\textbf{4.}
+Докажем, что множество \( \big\{x\in \mathbb{R}^n \mid \| x-x_0 \|_2 \le \|
+x-y_0 \|_2\big\} \) выпукло. Тогда исходное будет выпукло, как
+пересечение выпуклых по \( S \). Видно, что в обеих частях
+неравенства стоят выражения вида \( x_1^2 + \ldots + x_n^2 + Ax + b
+\). Поэтому, если перенести все на одну сторону, останется линейное
+неравенство на \( x \). Множество, соответствующее такому неравенству
+--- полупространство, которое \emph{выпукло}.
+\section{Двойственные конусы}
+\textbf{1.} Выражения \( X = X^T \) и \( y^TXy \ge 0 \) линейны по \(
+X \), т.е. выполняются для линейных комбинаций \( X_1,X_2 \) с
+положительными коэффициентами.
+Следовательно это выпуклый конус. Также заметим, что это множество
+--- пересечение множеств вида \( \{X \mid X=X^T,y_0^T X y_0\ge 0 \}\)
+по всем \( y_0 \ge 0 \). Каждое из таких множеств замкнуто, значит и
+исходное замкнуто.
+\medskip
+
+\textbf{2.} Далее \( X = \{x\in \mathbb{R}^n \mid x_1 \ge
+x_2\ge\ldots\ge x_n\ge 0\} \). Замкнутость и выпуклость следуют из
+того, что это множество является пересечением полупространств вида \(
+x_i \ge x_{i+1} \) и полупространства \( x_n \ge 0 \). Каждое из них
+является выпуклым и замкнутым, значит и пересечение выпукло и
+замкнуто. Рассмотрим \( x^1,x^2 \in X \), \( x^i = (x^i_1,\ldots ,
+x^i_n) \) и возьмем линейную комбинацию \( t_1x^1 + t_2x^2 \), \(
+t_1,t_2 \ge 0 \). Очевидно, что если \( x^1_i \ge x^1_{i+1} \) и \(
+x^2_i \ge x^2_{i+1} \), то \(t_1x^1_i + t_2 x^2_i \ge t_1x^1_{i+1} + t_2
+x^2_{i+1} \). Также \(  t_1x^1_n + t_2 x^2_n \ge 0\). Значит \(
+t_1x^1+t_2x^2 \in X \). \( X \) равен своей конической оболочке, т.е.
+он --- конус.
+
+Докажем общий факт:
+\begin{theorem}
+Если конус является полупространством \( K =
+\{x\in\mathbb{R}^n \mid (a,x)\ge 0\} \), то сопряженный конус равен
+\( K^* = \{t a \mid t\ge 0 \}\).
+\end{theorem}
+\begin{proof}
+Очевидно, \(\{ t a \mid t\ge 0 \} \) лежит в \( K^* \). Теперь, предположим, что
+\( a + b \in K^* \), \( b \neq ta \). Тогда в гиперплоскости \(
+(a,x)=0 \) лежит вектор \( y \) такой, что \( (b,y)\neq 0 \). Там же
+лежит \( -y \), так что будем считать, что \( (a+b,y)<0 \). Отсюда \(
+(a+b,y) = (b,y) < 0 \). Противоречие.
+\end{proof}
+Неравенства \( x_i \ge x_{i+1}, x_n \ge 0 \) имеют именно такой вид.
+В первом случае вектор \( a \) равен \( (0,\ldots,0,1,-1,0,\ldots,0)
+\),где \( 1,-1 \) стоят на \( i \)-м и \( i+1 \)-м местах, во втором
+--- \( (0,\ldots,0,1) \). Далее лемма.
+\begin{lemma}
+Пусть \( K_1,K_2 \) - выпуклые замкнутые конусы. Тогда \( C(K_1^*
+\cup K_2^*)  \subset (K_1\cap
+K_2)^*\). Здесь \( C \) --- коническая оболочка.
+\end{lemma}
+\begin{proof}
+Пусть \( a_1u + a_2v \) --- элемент \( C(K_1^*\cup K_2^*) \), где \(
+u\in K_1^*, v\in K_2^* \), и \(
+x\in K_1\cap K_2 \). Тогда \( (u,x)\ge 0 \) и \( (v,x)\ge 0 \).
+Отсюда \( (a_1 u + a_2 v, x)\ge 0 \). Значит \( C(K_1^*\cup K_2^*)
+\subset (K_1\cap K_2)^*\).
+\end{proof}
+Коническая оболочка полученных векторов имеет вид
 \[
-\tr(A^iX) - 1 \le 0.
+(t_1,t_2-t_1,t_3-t_2,\ldots, t_{n-1}-t_{n-1}, t_n - t_{n-1}), t_i \ge 0.
 \]
-\textbf{Двойственная задача:} Запишем лагранжиан.
-\[
-L(X,\mu) = -\log \det X + \sum\limits_i \mu_i\tr(A^iX) - \sum\limits_i \mu_i.
-\]
-Из семинаров известно, что \( \nabla \log \det X = X^{-1} \), а из
-явной формулы следа произведения матриц сразу же следует, что \(
-\nabla \tr\left(A^i X\right) = A^i \). Получаем, что
-\[
-\nabla_X L(X,\mu) = -X^{-1} + \sum\limits_i \mu_i A^i.
-\]
-Приравнивая к \( 0 \) получаем, что минимум достигается в \( X =
-\left(\sum\limits_i \mu_i A^i\right)^{-1} \). По условию \( X \) ---
-симметричная положительно определенная, поэтому условие на \( \dom g
-\) выглядит как \( \left(\sum\limits_i \mu_i A^i\right)^{-1} \in
-S_{++}.\) Подставим полученный \( X \) в лагранжиан и, с учетом
-линейности следа матрицы, получим двойственную функцию:
-\[
-g(\mu) = -\log \det\left(\left(\sum\limits_i \mu_i
-A^i\right)^{-1}\right) + \tr\left(\left(\sum\limits_i \mu_i
-A^i\right), \left(\sum\limits_i \mu_i A^i\right)^{-1}\right) -
-\sum\limits_i \mu_i,
-\]
-\textbf{Итоговая двойственная задача:}
-\begin{gather*}
-\min_\mu \log \det\left(\sum\limits_i \mu_i
-A^i\right)- \sum_i \mu_i + n.\\
-\text{s.t.}\\
-\sum\limits_i \mu_iA^i \in S^n_{++}.
-\end{gather*}
 \end{document}
