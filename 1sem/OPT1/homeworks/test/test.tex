@@ -1,0 +1,174 @@
+\documentclass{article}
+\usepackage{myrussian}
+\begin{document}
+
+\begin{center}
+  \Large {Домашнее задание 4.}
+\end{center}
+\bigskip
+\section{Условия оптимальности}
+\textbf{1.} Формулировка задачи. Положим \( \widetilde W = W - \sum
+w_i \) и будем обозначать \( E_i(s_i) \) --- функции энергии из
+условия. Нетрудно заметить, что все эти функции выпуклые, т.к. их
+графиками являются левая и правая ветви парабол, склеенные в нуле.
+Получаем следующую задачу оптимизации:
+\begin{gather*}
+  \min \sum E_i(s_i)\\
+  \text{s.t. aaa}\\
+  \sum s_i = \widetilde W\\
+\end{gather*}
+Условий типа неравенство нет, следовательно из условий ККТ остаются только два:
+\begin{gather*}
+  \sum s_i = \widetilde W\\
+  \grad \sum \big(E_i(s_i)\big) + \lambda \sum s_i - \lambda \widetilde W = 0
+\end{gather*}
+Условие на градиент распадается на \( n \) уравнений
+\begin{equation}
+  \frac{dE_i(s_i)}{ds_i} = -\lambda. \label{eq:1.1}
+\end{equation}
+При этом,
+\[
+  \frac{dE_i(s_i)}{ds_i} =
+  \begin{cases}
+    k_i^{\text{ext}}(s_i-N_i), &\text{ if } s_i \ge N_i,\\
+    k_i^{\text{comp}}(s_i-N_i), &\text{ if } s_i < N_i.
+  \end{cases}
+\]
+Разберем два случая:\\
+1) \( - \lambda \ge 0 \iff
+\lambda \le 0\). Тогда уравнение \ref{eq:1.1} принимает вид:
+\[
+k_i^{\text{ext}}(s_i-N_i) = -\lambda.
+\]
+Получаем \( s_i = -\frac{\lambda }{k_i^\text{ext}} + N_i\). Отсюда
+\[
+\widetilde W = \sum s_i = -\lambda \sum
+\frac{1}{k^\text{ext}_i} + \sum N_i.
+\]
+\\
+2) \( - \lambda < 0 \iff
+\lambda > 0\). Тогда уравнение \ref{eq:1.1} принимает вид:
+\[
+k_i^{\text{comp}}(s_i-N_i) = -\lambda.
+\]
+Получаем \( s_i = -\frac{\lambda }{k_i^\text{comp}} + N_i\). Отсюда
+\[
+\widetilde W = \sum s_i = -\lambda \sum
+\frac{1}{k^\text{comp}_i} + \sum N_i.
+\]
+Если \( \widetilde W - \sum n_i \ge 0 \) то попадаем в случай 1. Тогда \[
+\lambda =
+\frac{\sum N_i - \widetilde W}{\sum \frac{1}{k^\text{ext}_i}}.
+\]
+Отсюда
+\[
+s_i = \frac{\widetilde W - \sum N_j}{k_i^{\text{ext}}\sum
+\frac{1}{k_j^{\text{ext}}}} + N_i.
+\]
+Иначе, попали в случай 2. Аналогично
+\[
+s_i = \frac{\widetilde W - \sum N_j}{k_i^{\text{comp}}\sum
+\frac{1}{k_j^{\text{comp}}}} + N_i.
+\]
+
+\medskip
+
+\textbf{3.} Запишем условия ККТ:
+\begin{enumerate}
+\item \( \displaystyle\sum_{i=1}^{n} x_i=1 \),
+\item \( -x_i\le 0 \),\label{cond:3.2}
+\item \( \mu_i \ge 0 \),\label{cond:3.3}
+\item \( \mu_i x_i = 0 \),\label{cond:3.4}
+\item \( \grad_x \| x-y \|^2 + \lambda \sum x_i - \sum \mu_i x_i = 0\).
+\end{enumerate}
+Последнее уравнение является системой из \( n \) уравнений:
+\[
+2x_i - 2y_i +\lambda -\mu_i =0
+\]
+Получаем, что
+\[
+x_i = y_i - \frac \lambda 2 + \frac{\mu_i}2.
+\]
+Рассмотрим два случая:
+\begin{enumerate}
+\item \( y_i - \frac \lambda 2 \ge 0 \). Тогда из условий
+\ref{cond:3.2}, \ref{cond:3.3}, \ref{cond:3.4}, \( x_i = y_i - \frac
+\lambda 2 \), \( \mu_i=0 \).
+\item \( y_i - \frac \lambda 2 < 0 \). Тогда из условий
+\ref{cond:3.2}, \ref{cond:3.3}, \ref{cond:3.4}, \( x_i = 0 \), \(
+\mu_i= \lambda -2y_i\).
+\end{enumerate}
+Итак, получили, что
+\begin{equation}
+x_i = \max\left\{0,y_i-\frac \lambda 2\right\}
+\label{eq:3.1}
+\end{equation}
+Положим \( \left(y_{(1)}, \ldots, y_{(n)}\right) \) --- отсортированный по
+возрастанию вектор \( y \). Положим
+\[
+S(\lambda) = \sum_i x_i = \sum_i
+\max\left\{0,y_i-\frac \lambda 2\right\}
+\]
+Пусть \(\frac{\lambda_0} 2 \in \left[y_{(k-1)}, y_{(k)}\right) \). Тогда
+\begin{equation}
+S(\lambda_0) =\sum_{i=k}^{n}\left(y_{(i)}-\frac{\lambda_0}2 \right) =
+\sum_{i=k} y_{(i)} - (n-k+1)\frac{\lambda _0}2
+\label{eq:3.2}
+\end{equation}
+Видно, что каждое слагаемое \( >0 \), с ростом \( \lambda \) каждое
+слагаемое становится меньше,
+и самих слагаемых становится меньше. Поэтому функция \( S(\lambda )
+\) строго убывает.
+\\
+\textbf{Алгоритм решения.}
+\begin{enumerate}
+\item Сортируем \( y \), получаем \( (y_{(1)},\ldots, y_{(n)}) \) ---
+\( O(n\log n) \).
+\item Считаем \( S(2y_{(i)}) \) до первого \( i \) такого, что \(
+S(2y_{(i-1)}) \le 1 <  S(2y_{(i)}) \) --- \( O(n) \).
+\item Вычисляем \( \lambda \) из уравнения \ref{eq:3.2} --- \( O(n) \).
+\item Вычисляем \( x_i \) из уравнений \ref{eq:3.1} --- \( O(n) \).
+\end{enumerate}
+Итого, \( O(n\log n) \).
+\section{Двойственные задачи}
+\textbf{2.} Перепишем задачу в эквивалентном виде:
+\begin{gather*}
+\min t,\\
+\text{s.t.}\\
+\max_{i} (a_i^T x + b_i)\le t.
+\end{gather*}
+Условие \( \max_{i} (a_i^T x + b_i)\le t \) эквивалентно системе
+неравенств \( a_i^T x + b_i \le t. \)\\
+Итак, получили задачу:
+\begin{gather*}
+\min at,\\
+\text{s.t.}\\
+a_i^T x + b_i\le t.
+\end{gather*}
+\textbf{Двойственная задача}
+\[
+L(x,t,\mu) = t + \sum_i \mu_i (a_i^T x + b_i-t)
+\]
+Рассмотрим \( \grad_x L(x,t,\mu) \). Он равен \( \sum_i \mu_i a_i^T
+\). Далее, \(  \frac{\delta L(x,t,\mu)}{\delta t} = 1 -\sum_i \mu_i \).
+Положим \( A \) --- матрица, столбцами которой являются вектор \( a_i
+\).Получаем условия на \( \text{dom} g \):
+\begin{gather*}
+A \mu = 0,\\
+\sum_i \mu_i = 1.
+\end{gather*}
+Действительно, если хотя бы одно из этих условий не выполняется,
+можно подобрать последовательность \( x_k,t_k \), на которой
+достигается \( \inf = -\infty \). При этих условиях
+\[
+L(x,t,\mu) = \sum_i \mu_i b_i = \inf_{x,t}L(x,t,\mu) = L(\mu).
+\]
+\textbf{Двойственная задача:}
+\begin{gather*}
+\max_\mu \sum_i \mu_i b_i,\\
+\text{s.t.}\\
+A \mu =0,\\
+\sum_i \mu_i = 1.
+\end{gather*}
+dsa
+\end{document}
